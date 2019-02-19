@@ -181,7 +181,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 #data = pd.concat(data, ignore_index=True)
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
-data9=pd.read_excel(r'ConsolidatedData.xlsx')
+data9=pd.read_excel('ConsolidatedData.xlsx')
 print(data9.head())
 #data1=data1.iloc[2:]
 #print(list(data1))
@@ -194,7 +194,7 @@ r=r.reset_index()
 #r=r.iloc[:2]
 r=r.iloc[14:]
 #year2=[2018,2019]
-r['date']=pd.to_datetime(r['date'])
+#r['date']=pd.to_datetime(r['date'])
 #r=r[r['date'].dt.year.isin(year2)]
 #df=df[df.Year.isin(years)]
 print("rhead")
@@ -394,7 +394,7 @@ def update_fig(value):
     print("rhead")
     #print(r.head())
     r = pd.melt(r, id_vars=['Symbol','date', 'STX_14_2'], var_name='Type', value_name='values')
-    'Final r'
+    #'Final r'
     print(r.head())
 
     # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
