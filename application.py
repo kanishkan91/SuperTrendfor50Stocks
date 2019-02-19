@@ -166,14 +166,14 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 #Step 2: Bring in data from AKK and read into df
 
 
-data=pd.read_excel('ProjectUdaan.xlsx')
+#data=pd.read_excel('ProjectUdaan.xlsx')
 data9=pd.read_csv('ConsolidatedData.csv')
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
 data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades'],axis=1)
 #EMA(data,'open','new',7,alpha=True)
-print(data9.head())
+#print(data9.head())
 r= SuperTrend(data9,14,2)
 r=r.reset_index()
 #r=r.iloc[:2]
@@ -336,7 +336,7 @@ app.layout = html.Div([html.Div(
 
 def update_fig(value):
 
-    data9=pd.read_csv('ConsolidatedData.csv')
+    data9= pd.read_csv('ConsolidatedData.csv')
     # data1=data1.iloc[2:]
     # print(list(data1))
     data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close',
@@ -345,7 +345,7 @@ def update_fig(value):
         ['Series', 'Prev Close', 'Open Price', 'Last', 'Average Price', 'Total Traded Quantity', 'Turnover',
          'No. of Trades'], axis=1)
     print("data9")
-    print(data9.head())
+    
 
     data9=data9[data["Symbol"]==value]
     #df = df[df.Year.isin(years)]
