@@ -182,6 +182,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
 data9=pd.read_excel(r'ConsolidatedData.xlsx')
+print(data9.head())
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
