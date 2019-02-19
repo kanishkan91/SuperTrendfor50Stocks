@@ -205,6 +205,8 @@ r = pd.melt(r, id_vars=['date','STX_14_2'], var_name='Type', value_name='values'
 #external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__)
+application=app.server
+
 styles = {
     'pre': {
         'border': 'thin lightgrey solid',
@@ -512,4 +514,4 @@ def update_fig(value):
 #py.plot(fig, filename='ver2',validate=False)
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    application.run_server(debug=True)
