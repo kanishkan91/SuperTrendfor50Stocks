@@ -167,7 +167,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 
 
 data=pd.read_excel('ProjectUdaan.xlsx')
-data9=pd.read_excel('ConsolidatedData.xlsx')
+data9=pd.read_csv('ConsolidatedData.csv')
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
@@ -336,7 +336,7 @@ app.layout = html.Div([html.Div(
 
 def update_fig(value):
 
-    data9=pd.read_excel('ConsolidatedData.xlsx')
+    data9=pd.read_csv('ConsolidatedData.csv')
     # data1=data1.iloc[2:]
     # print(list(data1))
     data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close',
