@@ -188,23 +188,12 @@ print(data9.head())
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
 data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades'],axis=1)
 #EMA(data,'open','new',7,alpha=True)
-print(data9.head())
-r= SuperTrend(data9,14,2)
-r=r.reset_index()
-#r=r.iloc[:2]
-r=r.iloc[14:]
-#year2=[2018,2019]
-#r['date']=pd.to_datetime(r['date'])
-#r=r[r['date'].dt.year.isin(year2)]
-#df=df[df.Year.isin(years)]
-print("rhead")
-print(r.head())
-r = pd.melt(r, id_vars=['date','STX_14_2'], var_name='Type', value_name='values')
+print("Done with data process 1")
 
 #print(r.head())
 
 #external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
+print("app started")
 app = dash.Dash(__name__)
 application=app.server
 
@@ -352,7 +341,7 @@ app.layout = html.Div([html.Div(
     [dash.dependencies.Input('DropDown', 'value')])
 
 def update_fig(value):
-
+    print("Fig started")
     #path = (r'C:\Users\kanis\dash_app')
 
     #filenames = glob.glob(path + "/*.csv")
@@ -494,6 +483,7 @@ def update_fig(value):
             color='rgb(214, 12, 140)'
         )
     )
+    print("Data completed")
     data = [trace1, trace2, trace4, trace3, trace5]
     print('final data')
     print(data)
