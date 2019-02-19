@@ -1,4 +1,3 @@
-
     
 import pandas as pd
 import plotly.plotly as py
@@ -16,7 +15,7 @@ import plotly
 import quandl
 from plotly import tools
 import datetime
-import glob
+#import glob
 
 def EMA(df, base, target, period, alpha=False):
     """
