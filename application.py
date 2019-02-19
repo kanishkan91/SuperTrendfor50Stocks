@@ -1,4 +1,3 @@
-    
 import pandas as pd
 import plotly.plotly as py
 import plotly
@@ -7,7 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
-#import technical_indicators as ts
+import technical_indicators as ts
 import pandas as pd
 import pandas
 import xlsxwriter
@@ -15,7 +14,7 @@ import plotly
 import quandl
 from plotly import tools
 import datetime
-#import glob
+import glob
 
 def EMA(df, base, target, period, alpha=False):
     """
@@ -164,15 +163,31 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 
 #Step 2: Bring in data from AKK and read into df
 
+#path = (r'Data')
+
+#filenames = glob.glob(path + "/*.csv")
+#print("Reading files from path" + str(path))
+
+#data= []
+#for filename in filenames:
+    #filename = pd.read_csv(filename)
+        #filename = pd.merge(filename, CountryConcord, how='left', left_on='location_name',
+                            #right_on='Country name in IHME')
+        #filename = pd.merge(filename, SeriesConcord, how='left', left_on='cause_name', right_on='Series name in IHME')
+    #filename = filename.dropna(how='any')
+        # GBDDalys.append(pd.read_csv(filename,low_memory=False))
+    #data.append(filename)
+
+#data = pd.concat(data, ignore_index=True)
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
-data9=pd.read_csv('ConsolidatedData.csv')
+data9=pd.read_excel(r'ConsolidatedData.xlsx')
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
 data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades'],axis=1)
 #EMA(data,'open','new',7,alpha=True)
-#print(data9.head())
+print(data9.head())
 r= SuperTrend(data9,14,2)
 r=r.reset_index()
 #r=r.iloc[:2]
@@ -335,7 +350,25 @@ app.layout = html.Div([html.Div(
 
 def update_fig(value):
 
-    data9= pd.read_csv('ConsolidatedData.csv')
+    #path = (r'C:\Users\kanis\dash_app')
+
+    #filenames = glob.glob(path + "/*.csv")
+    #print("Reading files from path" + str(path))
+    #print(value)
+    #data = []
+    #for filename in filenames:
+        #filename = pd.read_csv(filename)
+        # filename = pd.merge(filename, CountryConcord, how='left', left_on='location_name',
+        # right_on='Country name in IHME')
+        # filename = pd.merge(filename, SeriesConcord, how='left', left_on='cause_name', right_on='Series name in IHME')
+        #filename = filename.dropna(how='any')
+        # GBDDalys.append(pd.read_csv(filename,low_memory=False))
+        #data.append(filename)
+
+    #data = pd.concat(data, ignore_index=True)
+
+    # data=pd.read_excel('ProjectUdaan.xlsx')
+    data9 = pd.read_excel('ConsolidatedData.xlsx')
     # data1=data1.iloc[2:]
     # print(list(data1))
     data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close',
@@ -344,9 +377,9 @@ def update_fig(value):
         ['Series', 'Prev Close', 'Open Price', 'Last', 'Average Price', 'Total Traded Quantity', 'Turnover',
          'No. of Trades'], axis=1)
     print("data9")
-    
+    print(data9.head())
 
-    data9=data9[data["Symbol"]==value]
+    data9=data9[data9["Symbol"]==value]
     #df = df[df.Year.isin(years)]
     r = SuperTrend(data9, 14, 2)
     #r = r.iloc[:2]
