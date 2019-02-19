@@ -6,7 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
-import technical_indicators as ts
+#import technical_indicators as ts
 import pandas as pd
 import pandas
 import xlsxwriter
@@ -14,7 +14,7 @@ import plotly
 import quandl
 from plotly import tools
 import datetime
-import glob
+#import glob
 
 def EMA(df, base, target, period, alpha=False):
     """
