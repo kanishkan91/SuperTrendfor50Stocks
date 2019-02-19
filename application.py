@@ -188,6 +188,7 @@ print(data9.head())
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades']
 data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades'],axis=1)
 #EMA(data,'open','new',7,alpha=True)
+q=data9.Symbol.unique()
 print("Done with data process 1")
 
 #print(r.head())
