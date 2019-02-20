@@ -182,7 +182,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 #data = pd.concat(data, ignore_index=True)
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
-data9=pd.read_excel('ConsolidatedData.csv')
+data9=pd.read_csv('ConsolidatedData.csv')
 
 #data1=data1.iloc[2:]
 #print(list(data1))
