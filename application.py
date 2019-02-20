@@ -183,7 +183,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
 data9=pd.read_excel('ConsolidatedData.xlsx')
-print(data9.head())
+
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades','PriceCat']
@@ -191,7 +191,7 @@ data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Pric
 #EMA(data,'open','new',7,alpha=True)
 q=data9.Symbol.unique()
 print("Done with data process 1")
-datatable=data9
+#datatable=data9
 #print(r.head())
 
 #external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -224,7 +224,7 @@ app.layout = html.Div([html.Div(
 , 'value': i} for i in q],value='ADANIPORTS')),
         html.Div(id='container-button-basic',
              children='Please select a stock')],style={ 'width': '30%','float':'left'}),
-      html.Div([dcc.Graph(id='SuperTrend',hoverData={'points': [{'x': '31-12-2018'}]})],style={ 'width': '80%','float':'left','height':'50%', 'display': 'inline-block'}),
+      html.Div([dcc.Graph(id='SuperTrend')],style={ 'width': '80%','float':'left','height':'50%', 'display': 'inline-block'}),
 
       html.Div([dcc.Graph(id='ATR')
     ],style={ 'width': '60%','float':'left','display': 'inline-block','height':'25%'}),
@@ -279,14 +279,13 @@ def update_fig(value):
     r['date'] = pd.to_datetime(r['date'])
     r = r[r['date'].dt.year.isin(year2)]
     # df=df[df.Year.isin(years)]
-    print("date")
+    
     #print(r.head())
     r = pd.melt(r, id_vars=['Symbol','PriceCat','date', 'STX_14_2',], var_name='Type', value_name='values')
     #'Final r'
-    print(r['date'])
-    #date1=r.drop_duplicates(date1['date'])
+        #date1=r.drop_duplicates(date1['date'])
     #date=date1['date']
-    print("print date")
+    
     #print(date1.head())
     # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -298,11 +297,11 @@ def update_fig(value):
     data1=data1[data1.PriceCat.isin(opt4)]
     #data = data.loc[data['Unit Name'] == 'Percent of GDP']
     print('box plot data before duplicate drop')
-    print(data1.head())
+    
     data1.drop_duplicates(subset=['date','Type'])
     x = data1['date']
     print('box plot data')
-    print(data1.head())
+    
 
     trace1 = go.Box(
         y=data1['values'],
