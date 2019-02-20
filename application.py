@@ -182,7 +182,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 #data = pd.concat(data, ignore_index=True)
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
-data9=pd.read_excel('ConsolidatedData.xlsx')
+data9=pd.read_excel('ConsolidatedData.csv')
 
 #data1=data1.iloc[2:]
 #print(list(data1))
@@ -256,7 +256,7 @@ def update_fig(value):
     #data = pd.concat(data, ignore_index=True)
 
     # data=pd.read_excel('ProjectUdaan.xlsx')
-    data9 = pd.read_excel('ConsolidatedData.xlsx')
+    data9 = pd.read_csv('ConsolidatedData.csv')
     # data1=data1.iloc[2:]
     # print(list(data1))
     data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open', 'High', 'Low', 'Last', 'Close',
@@ -429,7 +429,7 @@ def update_fig(value):
 
 def update_fig(value):
     print("ATR started")
-    data9 = pd.read_excel('ConsolidatedData.xlsx')
+    data9 = pd.read_csv('ConsolidatedData.csv')
     # data1=data1.iloc[2:]
     # print(list(data1))
     data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open', 'High', 'Low', 'Last', 'Close',
