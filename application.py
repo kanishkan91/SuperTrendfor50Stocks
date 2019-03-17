@@ -14,7 +14,8 @@ import plotly
 import quandl
 from plotly import tools
 import datetime
-#import dash_table
+import dash_table as dt
+from dash_table import DataTable
 #import glob
 
 def EMA(df, base, target, period, alpha=False):
@@ -43,6 +44,7 @@ def EMA(df, base, target, period, alpha=False):
 
     df[target].fillna(0, inplace=True)
     return df
+
 
 
 
@@ -183,7 +185,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
 
 #data=pd.read_excel('ProjectUdaan.xlsx')
 data9=pd.read_csv('ConsolidatedData.csv')
-
+print(data9.head())
 #data1=data1.iloc[2:]
 #print(list(data1))
 data9.columns=['Symbol', 'Series', 'date', 'Prev Close', 'Open Price', 'High', 'Low', 'Last', 'Close', 'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades','PriceCat']
@@ -191,8 +193,10 @@ data9=data9.drop([ 'Series', 'Prev Close', 'Open Price',  'Last',  'Average Pric
 #EMA(data,'open','new',7,alpha=True)
 q=data9.Symbol.unique()
 print("Done with data process 1")
-#datatable=data9
+datatable=data9
+#r = pd.melt(r, id_vars=['Symbol','PriceCat','date', 'STX_14_2',], var_name='Type', value_name='values')
 #print(r.head())
+
 
 #external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 print("app started")
@@ -223,20 +227,27 @@ app.layout = html.Div([html.Div(
         html.Div([(dcc.Dropdown(id='DropDown', options=[{'label': i
 , 'value': i} for i in q],value='ADANIPORTS')),
         html.Div(id='container-button-basic',
-             children='Please select a stock')],style={ 'width': '30%','float':'left'}),
-      html.Div([dcc.Graph(id='SuperTrend')],style={ 'width': '80%','float':'left','height':'50%', 'display': 'inline-block'}),
-
-      html.Div([dcc.Graph(id='ATR')
-    ],style={ 'width': '60%','float':'left','display': 'inline-block','height':'25%'}),
-
+             children='Please select a stock')],style={ 'width': '20%','float':'right'}),
+html.Div([(dcc.Input(id='Input1', value=14)),
+        html.Div(id='container-button-basic1',
+             children='Please select a period for Super Trend')],style={ 'width': '20%','float':'right'}),
+html.Div([(dcc.Input(id='Input2', value=2)),
+        html.Div(id='container-button-basic2',
+             children='Please select a muktiplier for Super Trend')],style={ 'width': '20%','float':'right'}),
+html.Div([(dcc.RangeSlider(id='Range',marks={i:'{}'.format(i) for i in range(2012,2019)},min=2013,max=2018,value=[2017,2018],step=1))
+          ],style={ 'display': 'inline-block','width': '30%','float':'left','font':'15','height':'52%'}),
+      html.Div([dcc.Graph( id='graph',hoverData={'points': [{'x': '31-12-2018'}]})],style={'width': '80%','float':'left','height':'48%', 'display': 'inline-block'}),
 
 ])
 
 @app.callback(
-    dash.dependencies.Output('SuperTrend', 'figure'),
-    [dash.dependencies.Input('DropDown', 'value')])
+    dash.dependencies.Output('graph', 'figure'),
+    [dash.dependencies.Input('DropDown', 'value'),
+     dash.dependencies.Input('Range', 'value'),
+     dash.dependencies.Input('Input1', 'value'),
+     dash.dependencies.Input('Input2', 'value')])
 
-def update_fig(value):
+def update_fig(value,range,Input1,Input2):
     print("Fig started")
     #path = (r'C:\Users\kanis\dash_app')
 
@@ -269,23 +280,28 @@ def update_fig(value):
 
     data9=data9[data9["Symbol"]==value]
     #df = df[df.Year.isin(years)]
-    r = SuperTrend(data9, 14, 2)
+    Input1=int(Input1)
+    Input2=int(Input2)
+    print(Input1*1)
+    r = SuperTrend(data9, Input1, Input2)
     #r = r.iloc[:2]
     #r = r.iloc[14:]
     #r['PriceCat']=0.00
     #r['PriceCat'] = np.where((r['Close'] > 0.00), np.where((r[r['Prev Close']] < r['Close']), 'down', 'up'), np.NaN)
     #r=r.drop(['Prev Close'])
-    year2=[2018]
+    year2=range
     r['date'] = pd.to_datetime(r['date'])
     r = r[r['date'].dt.year.isin(year2)]
     # df=df[df.Year.isin(years)]
-    
-    #print(r.head())
-    r = pd.melt(r, id_vars=['Symbol','PriceCat','date', 'STX_14_2',], var_name='Type', value_name='values')
+
+    print('rhead')
+    print(r.head())
+    r = pd.melt(r, id_vars=['Symbol','PriceCat','date', 'STX_'+str(Input1)+'_'+str(Input2),], var_name='Type', value_name='values')
     #'Final r'
-        #date1=r.drop_duplicates(date1['date'])
+
+    #date1=r.drop_duplicates(date1['date'])
     #date=date1['date']
-    
+    print("print date")
     #print(date1.head())
     # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -297,15 +313,16 @@ def update_fig(value):
     data1=data1[data1.PriceCat.isin(opt4)]
     #data = data.loc[data['Unit Name'] == 'Percent of GDP']
     print('box plot data before duplicate drop')
-    
+
     data1.drop_duplicates(subset=['date','Type'])
-    x = data1['date']
+    x1 = data1['date']
     print('box plot data')
-    
+
+
 
     trace1 = go.Box(
         y=data1['values'],
-        x=x,
+        x=data1['date'],
         name='Price Range',
         marker=dict(
             color='#3D9970'
@@ -328,12 +345,13 @@ def update_fig(value):
         )
     )
 
-    opt2 = ['ST_14_2']
+    opt2 = ['ST_'+str(Input1)+'_'+str(Input2)]
     data2 = r[r.Type.isin(opt2)]
-
-    data2 = data2.loc[data2['STX_14_2'] == 'up']
-    data2 = data2.drop_duplicates('date')
+    print('data2Head')
     print(data2.head())
+    data2 = data2.loc[data2['STX_'+str(Input1)+'_'+str(Input2)] == 'up']
+    data2 = data2.drop_duplicates('date')
+
     trace2 = go.Scatter(
         y=data2['values'],
         x=data2['date'],
@@ -345,10 +363,10 @@ def update_fig(value):
         )
     )
 
-    opt4 = ['ST_14_2']
+    opt4 = ['ST_'+str(Input1)+'_'+str(Input2)]
     data4 = r[r.Type.isin(opt4)]
 
-    data4 = data4.loc[data4['STX_14_2'] == 'down']
+    data4 = data4.loc[data4['STX_'+str(Input1)+'_'+str(Input2)] == 'down']
     data4 = data4.drop_duplicates('date')
 
     trace4 = go.Scatter(
@@ -362,7 +380,7 @@ def update_fig(value):
         )
     )
 
-    opt5 = ['ST_14_2']
+    opt5 = ['ST_'+str(Input1)+'_'+str(Input2)]
     data5 = r[r.Type.isin(opt5)]
 
     # data5=data4.loc[data4['STX_7_3']=='down']
@@ -379,17 +397,17 @@ def update_fig(value):
         )
     )
 
-    opt6 = ['ATR_14']
+    opt6 = ['ATR_'+str(Input1)]
     data6 = r[r.Type.isin(opt6)]
     print('data6 heads')
-    print(data6.head())
+
     # data5=data4.loc[data4['STX_7_3']=='down']
     # data4=data4.drop_duplicates('date')
     # print(data4.head())
     trace6 = go.Scatter(
         y=data6['values'],
         x=data6['date'],
-        mode='markers',
+        mode='lines',
         name='ATR',
         connectgaps=False,
         marker=dict(
@@ -411,93 +429,29 @@ def update_fig(value):
     )
     print("Data completed")
     data = [trace1,trace7,trace2,trace4,trace5,trace3]
-    print('final data')
-    print(data)
-    layout = go.Layout(title='SuperTrend and stock prices for '+str(value),
-        yaxis=dict(
-            title='SuperTrend',
-            zeroline=False,
-
-        ), height=500)
-    return {'data':data,
-            'layout':layout}
 
 
-@app.callback(
-    dash.dependencies.Output('ATR', 'figure'),
-    [dash.dependencies.Input('DropDown', 'value')])
-
-def update_fig(value):
-    print("ATR started")
-    data9 = pd.read_csv('ConsolidatedData.csv')
-    # data1=data1.iloc[2:]
-    # print(list(data1))
-    data9.columns = ['Symbol', 'Series', 'date', 'Prev Close', 'Open', 'High', 'Low', 'Last', 'Close',
-                     'Average Price', 'Total Traded Quantity', 'Turnover', 'No. of Trades', 'PriceCat']
-    data9 = data9.drop(
-        ['Series', 'Prev Close', 'Last', 'Average Price', 'Total Traded Quantity', 'Turnover',
-         'No. of Trades'], axis=1)
-    print("data9")
-    print(data9.head())
-
-    data9 = data9[data9["Symbol"] == value]
-    # df = df[df.Year.isin(years)]
-    r = SuperTrend(data9, 14, 2)
-    # r = r.iloc[:2]
-    # r = r.iloc[14:]
-    # r['PriceCat']=0.00
-    # r['PriceCat'] = np.where((r['Close'] > 0.00), np.where((r[r['Prev Close']] < r['Close']), 'down', 'up'), np.NaN)
-    # r=r.drop(['Prev Close'])
-    year2 = [2018]
-    r['date'] = pd.to_datetime(r['date'])
-    r = r[r['date'].dt.year.isin(year2)]
-    # df=df[df.Year.isin(years)]
-    print("rhead")
-    # print(r.head())
-    r = pd.melt(r, id_vars=['Symbol', 'PriceCat', 'date', 'STX_14_2', ], var_name='Type', value_name='values')
-    # 'Final r'
-    print(r.head())
-    # date1=r.drop_duplicates(date1['date'])
-    # date=date1['date']
-    print("print date")
-    # print(date1.head())
-    # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-    opt6 = ['ATR_14']
-    data6 = r[r.Type.isin(opt6)]
-    print('data6 heads')
-    print(data6.head())
-    # data5=data4.loc[data4['STX_7_3']=='down']
-    # data4=data4.drop_duplicates('date')
-    # print(data4.head())
-    trace6 = go.Scatter(
-        y=data6['values'],
-        x=data6['date'],
-        mode='lines',
-        name='ATR',
-        connectgaps=False,
-        marker=dict(
-            color='rgb(107,174,214)'
-        ))
-    data = [trace6]
     print('final data')
 
-    layout = go.Layout(title='ATR for '+str(value),
-        yaxis=dict(
-            title='ATR',
-            zeroline=False,
 
-        ), height=500)
-    return {'data': data,
-            'layout': layout}
+    fig = tools.make_subplots(rows=2, cols=1, specs=[[{}], [{}]],
+                              shared_xaxes=True, shared_yaxes=True,
+                              vertical_spacing=0.001)
+
+    fig.append_trace(trace1, 1, 1)
+    fig.append_trace(trace2, 1, 1)
+    fig.append_trace(trace3, 1, 1)
+    fig.append_trace(trace4, 1, 1)
+    fig.append_trace(trace5, 1, 1)
+    fig.append_trace(trace7, 1, 1)
+    fig.append_trace(trace6, 2, 1)
+
+    fig['layout'].update(height=800, width=1200,
+                         title='SuperTrend with ATR for '+str(value))
+
+    return fig
 
 
-#update_fig(value)
-
-#data=data+trace6
-
-
-#plotly.tools.set_credentials_file(username='kanishkan91',api_key='aYeSpFRWLtq4L1a2k6VC')
-#py.plot(fig, filename='ver2',validate=False)
 
 if __name__ == '__main__':
     application.run_server(debug=True)
