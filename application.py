@@ -233,7 +233,7 @@ html.Div([(dcc.Input(id='Input1', value=14)),
              children='Please select a period for Super Trend')],style={ 'width': '20%','float':'right'}),
 html.Div([(dcc.Input(id='Input2', value=2)),
         html.Div(id='container-button-basic2',
-             children='Please select a muktiplier for Super Trend')],style={ 'width': '20%','float':'right'}),
+             children='Please select a multiplier for Super Trend')],style={ 'width': '20%','float':'right'}),
 html.Div([(dcc.RangeSlider(id='Range',marks={i:'{}'.format(i) for i in range(2012,2019)},min=2013,max=2018,value=[2017,2018],step=1))
           ],style={ 'display': 'inline-block','width': '30%','float':'left','font':'15','height':'52%'}),
       html.Div([dcc.Graph( id='graph',hoverData={'points': [{'x': '31-12-2018'}]})],style={'width': '80%','float':'left','height':'48%', 'display': 'inline-block'}),
