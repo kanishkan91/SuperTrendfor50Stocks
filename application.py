@@ -14,8 +14,8 @@ import plotly
 import quandl
 from plotly import tools
 import datetime
-import dash_table as dt
-from dash_table import DataTable
+#import dash_table as dt
+#from dash_table import DataTable
 #import glob
 
 def EMA(df, base, target, period, alpha=False):
