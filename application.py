@@ -247,7 +247,7 @@ html.Div([(dcc.RangeSlider(id='Range',marks={i:'{}'.format(i) for i in range(201
      dash.dependencies.Input('Input1', 'value'),
      dash.dependencies.Input('Input2', 'value')])
 
-def update_fig(value,range,Input1,Input2):
+def update_fig(value,range1,Input1,Input2):
     print("Fig started")
     #path = (r'C:\Users\kanis\dash_app')
 
@@ -289,7 +289,9 @@ def update_fig(value,range,Input1,Input2):
     #r['PriceCat']=0.00
     #r['PriceCat'] = np.where((r['Close'] > 0.00), np.where((r[r['Prev Close']] < r['Close']), 'down', 'up'), np.NaN)
     #r=r.drop(['Prev Close'])
-    year2=range
+    min1= min(range1)
+    min2=max(range1)
+    year2=range(min1,min2)
     r['date'] = pd.to_datetime(r['date'])
     r = r[r['date'].dt.year.isin(year2)]
     # df=df[df.Year.isin(years)]
