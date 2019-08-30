@@ -20,4 +20,4 @@ d. The user can filter the visualization for individual elements. For example, y
 
 Screenshot of application-
 
-![Test Image 1] 
+![Test Image 1] (SuperTrend.JPG)
