@@ -20,4 +20,4 @@ d. The user can filter the visualization for individual elements. For example, y
 
 Screenshot of application-
 
-![Test Image 1] (https://github.com/kanishkan91/SuperTrendfor50Stocks/blob/master/SuperTrend.JPG)
+![Test Image 1] (https://raw.githubusercontent.com/kanishkan91/SuperTrendfor50Stocks/master/SuperTrend.JPG)
