@@ -17,3 +17,7 @@ c. Added input buttons that the user can select a period and weight to create he
 
 d. The user can filter the visualization for individual elements. For example, you can display just the ATR or the closing price if you would like. (This feature had already existed within dash, but I did not know about it till now).
 
+
+Screenshot of application-
+
+![Test Image 1] 
