@@ -1,5 +1,7 @@
 Project name- Super Trend Visulaization
-Author- Kanishka Narayan
+
+Authors- Aditya Kulkarni & Kanishka Narayan
+
 Description- Use this code to re-create a visulization application used to analyze and visualize stock data. The original visualization can be found 
 here-https://supertrend2.herokuapp.com/
 
