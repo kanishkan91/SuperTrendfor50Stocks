@@ -18,7 +18,7 @@ jupyter-core==4.4.0
 lxml==4.3.0
 MarkupSafe==1.1.0
 nbformat==4.4.0
-numpy==1.16.1
+numpy==1.22.0
 pandas==0.24.1
 plotly==3.6.0
 python-dateutil==2.7.5
